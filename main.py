@@ -1,73 +1,61 @@
-#### Imports et définition des variables globales
+"""Module contenant l'implémentation itérative et récursive de l'algorithme
+d'encodage Run-Length (artcode)."""
 
-# Mandatory for the recursive solution to work on large inputs
 import sys
 sys.setrecursionlimit(2000)
 
 
-#### Fonctions secondaires
-
-
 def artcode_i(s):
-    """retourne la liste de tuples encodant une chaîne de caractères passée en argument selon un algorithme itératif
+    """Encode une chaîne en une liste de tuples (caractère, nombre d'occurrences)
+    en utilisant une approche itérative.
 
     Args:
-        s (str): la chaîne de caractères à encoder
+        s (str): chaîne à encoder
 
     Returns:
-        list: la liste des tuples (caractère, nombre d'occurences)
+        list[tuple[str, int]]: liste des couples (caractère, répétitions)
     """
     retour = s[0]
     k = 1
     result = []
 
-    for i in range(1, len(s)) :
-        if s[i] == retour :
-            k = k + 1
-        else : 
-            result.append( (retour, k) )
+    for i in range(1, len(s)):
+        if s[i] == retour:
+            k += 1
+        else:
+            result.append((retour, k))
             k = 1
         retour = s[i]
-    result.append( (retour, k) )
+
+    result.append((retour, k))
     return result
 
 
 def artcode_r(s):
-    """retourne la liste de tuples encodant une chaîne de caractères passée en argument selon un algorithme récursif
+    """Encode une chaîne en une liste de tuples (caractère, nombre d'occurrences)
+    en utilisant une approche récursive.
 
     Args:
-        s (str): la chaîne de caractères à encoder
+        s (str): chaîne à encoder
 
     Returns:
-        list: la liste des tuples (caractère, nombre d'occurences)
+        list[tuple[str, int]]: liste des couples (caractère, répétitions)
     """
-    
-    # votre code ici
-
-    # cas de base
-    if not s :
+    if not s:
         return []
+
     i = 1
-    # recherche nombre de caractères identiques au premier
-    while i < len(s) :
-        
-        if s[0] == s[i] :
-            i = i + 1
-        else :
-            break
+    while i < len(s) and s[i] == s[0]:
+        i += 1
 
-
-    # appel récursif
-
-    return [(s[0], i) ] + artcode_r(s[i::])
-    
-
-#### Fonction principale
+    return [(s[0], i)] + artcode_r(s[i:])
 
 
 def main():
+    """Fonction principale exécutant quelques tests de l'encodeur."""
     print(artcode_i('MMMMaaacXolloMM'))
     print(artcode_r('MMMMaaacXolloMM'))
+
 
 if __name__ == "__main__":
     main()
