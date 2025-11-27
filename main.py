@@ -49,9 +49,11 @@ def artcode_r(s):
         return []
     i = 1
     # recherche nombre de caractères identiques au premier
-    while s[0] == s[i] :
-        i = i + 1
-        if i >= len(s) :
+    while i < len(s) :
+        
+        if s[0] == s[i] :
+            i = i + 1
+        else :
             break
 
 
